@@ -36,31 +36,42 @@ function questionUI(question) {
 }
 
 $('#sendSurvey').click(() => {
+  //TODO: Validar respuestas y datos a enviar
+  if (!locationAddress) {
+    alert('Seleccione la ubicación de la propiedad');
+    return;
+  }
+
   const answers = surveyAnswers();
   const body = {
     email: $('#email').val(),
     phone: $('#phone').val(),
     address: $('#address').val(),
+    latitude: locationAddress.lat(),
+    longitude: locationAddress.lng(),
     answers
   }
-
-  //TODO: Validar respuestas y datos a enviar
 
   $.post({
     url: url,
     contentType: 'application/json'
   }, JSON.stringify(body), () => {
-    alert('Correcto. Encuesta registrada, te enviaremos tu reporte gratuito en unos instantes');
+    alert('OK. Encuesta registrada, te enviaremos tu reporte gratuito en unos instantes');
   }).fail((error) => {
-    if (error.responseJSON) {
-      const code = error.responseJSON.code;
-      if (code === 'email-already-register') {
-        alert('Error: El correo electrónico ya ha sido registrado anteriormente');
-      }
-      return;
-    }
-    alert('El servicio de registro no está disponible, vuelva a intentarlo más tarde.');
     console.log(error);
+
+    if (error.responseJSON) {
+      if (error.responseJSON.code) {
+        const code = error.responseJSON.code;
+        if (code === 'email-already-register') {
+          alert('Error: El correo electrónico ya ha sido registrado anteriormente');
+        }
+        return;
+      }
+      return alert(`Error: ${error.responseJSON.message}`);
+    }
+
+    alert('Error: El servicio no está disponible, vuelva a intentarlo más tarde.');
   });
 });
 
@@ -90,3 +101,85 @@ function surveyAnswers() {
 
   return answers;
 }
+
+
+//MAP
+let locationAddress = null;
+
+async function initMap() {
+  const mapCenter = { lat: 23.8757481856231, lng: -101.7511031447077 };
+  const { Map } = await google.maps.importLibrary("maps");
+  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+  await google.maps.importLibrary("places");
+
+  const map = new Map(document.getElementById("map"), {
+    zoom: 5,
+    center: mapCenter,
+    mapId: "SURVEY_MAP_ID"
+  });
+
+  const marker = new AdvancedMarkerElement({
+    map: map,
+    position: mapCenter
+  });
+
+  map.addListener("click", (event) => {
+    const clickedPosition = {
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+    };
+
+    marker.position = clickedPosition;
+
+    geocodeLocation(marker.position);
+  });
+
+  const input = document.getElementById("addressAutocomplete");
+  const placeAutocomplete = new google.maps.places.Autocomplete(input, {
+    componentRestrictions: { country: 'mx' }
+  });
+
+  placeAutocomplete.addListener("place_changed", () => {
+    const place = placeAutocomplete.getPlace();
+
+    if (!place.geometry || !place.geometry.location) {
+      return console.error("No se encontraron detalles para la dirección seleccionada.");
+    }
+
+    if (!addressInMexico(place.address_components)) {
+      return alert('La dirección no esta dentro de México');
+    }
+
+    marker.position = place.geometry.location;
+
+    map.setCenter(marker.position);
+    map.setZoom(15);
+
+    geocodeLocation(place.geometry.location);
+  });
+
+  const geocoder = new google.maps.Geocoder();
+
+  function geocodeLocation(location) {
+    $('#address').val(null);
+    locationAddress = null;
+    geocoder.geocode({ location: location }, (results, status) => {
+      if (status === "OK") {
+        if (results[0]) {
+          if (!addressInMexico(results[0].address_components)) {
+            return alert('La dirección no esta dentro de México');
+          }
+
+          locationAddress = results[0].geometry.location;
+          $('#address').val(results[0].formatted_address);
+        }
+      }
+    });
+  }
+}
+
+function addressInMexico(addressComponents) {
+  return addressComponents.some(component => component.short_name === 'MX');
+}
+
+initMap();

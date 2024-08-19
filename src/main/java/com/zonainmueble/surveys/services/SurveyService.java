@@ -51,6 +51,8 @@ public class SurveyService {
         .email(input.getEmail())
         .phone(input.getPhone())
         .address(input.getAddress())
+        .latitude(input.getLatitude())
+        .longitude(input.getLongitude())
         .createdAt(new Date())
         .build();
 

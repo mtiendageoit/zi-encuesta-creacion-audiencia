@@ -30,9 +30,16 @@
     <p>
       Escribe la dirección del inmueble que quieres analizar (sólo ubicaciones dentro de México)
       <br>
-      <input id="address" type="text" placeholder="Dirección del inmueble" value="Lago Garda 83, Anáhuac I Secc, Miguel Hidalgo, 11320 Ciudad de México, CDMX">
+      <input id="addressAutocomplete" type="text" placeholder="Dirección del inmueble"
+        style="width: 100%; padding: 5px;">
     </p>
+    <div id="map" style="height: 400px; width: 100%;">
 
+    </div>
+    <h4>
+      Dirección del inmueble: <input id="address" type="text" style="width: 100%;"></input>
+    </h4>
+    <hr>
     <p>
       Danos el correo electrónico donde te enviaremos tu reporte basico de ubicación <b>(gratuito)</b>
       <br>
@@ -54,6 +61,12 @@
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
+      key: "AIzaSyDi9WC7UZjkzFdofNS8K0jYbRurOrIVrfQ",
+      v: "weekly",
+    });
+  </script>
   <script src="js/survey.js"></script>
 </body>
 

@@ -20,8 +20,8 @@ public class SurveyResponse {
   private String phone;
 
   private String address;
-  // private String longitude;
-  // private String latitude;
+  private String longitude;
+  private String latitude;
 
   // private boolean acceptedPrivacyPolicy;
   // private boolean acceptedReceiveInfo;
