@@ -36,11 +36,15 @@ function questionUI(question) {
 }
 
 $('#sendSurvey').click(() => {
-  //TODO: Validar respuestas y datos a enviar
   if (!locationAddress) {
-    alert('Seleccione la ubicación de la propiedad');
-    return;
+    return alert('Seleccione la ubicación de la propiedad');
   }
+
+  const phone = $('#phone').val().trim();
+  if (phone.length != 10) {
+    return alert('El Whatsapp debe ser de 10 dígitos');
+  }
+  //TODO: Validar respuestas de la encuesta
 
   const answers = surveyAnswers();
   const body = {
