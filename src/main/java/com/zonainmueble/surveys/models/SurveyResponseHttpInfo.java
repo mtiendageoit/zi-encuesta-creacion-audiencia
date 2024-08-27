@@ -3,6 +3,7 @@ package com.zonainmueble.surveys.models;
 import java.util.Date;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Data
@@ -13,6 +14,10 @@ import lombok.*;
 @Table(name = "survey_responses_http_info")
 public class SurveyResponseHttpInfo {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @NotNull
   private Long surveyResposeId;
 
   private String ip;
@@ -21,6 +26,7 @@ public class SurveyResponseHttpInfo {
   private String language;
   private String accept;
 
-   @Temporal(TemporalType.TIMESTAMP)
+  @NotNull
+  @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
 }

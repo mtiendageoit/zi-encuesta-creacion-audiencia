@@ -3,6 +3,7 @@ package com.zonainmueble.surveys.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -15,9 +16,9 @@ public class QuestionOption {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "question_id", nullable = false)
+    @JoinColumn(name = "question_id")
     private SurveyQuestion question;
 
-    @Column(nullable = false)
+    @NotNull
     private String option;
 }

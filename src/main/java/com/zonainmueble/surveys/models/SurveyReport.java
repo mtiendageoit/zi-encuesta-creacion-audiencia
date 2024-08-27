@@ -2,6 +2,8 @@ package com.zonainmueble.surveys.models;
 
 import java.util.Date;
 
+import com.zonainmueble.surveys.enums.*;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -9,26 +11,24 @@ import lombok.*;
 @Data
 @Entity
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "survey_responses")
-public class SurveyResponse {
+@Table(name = "survey_reports")
+public class SurveyReport {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @NotNull
-  private String email;
-  private String phone;
+  private Long surveyResposeId;
 
   @NotNull
-  private String address;
+  @Enumerated(EnumType.STRING)
+  private ReportType reportType;
 
   @NotNull
-  private Double longitude;
+  @Enumerated(EnumType.STRING)
+  private SurveyReportStatus status;
 
-  @NotNull
-  private Double latitude;
+  private String error;
 
   @NotNull
   @Temporal(TemporalType.TIMESTAMP)

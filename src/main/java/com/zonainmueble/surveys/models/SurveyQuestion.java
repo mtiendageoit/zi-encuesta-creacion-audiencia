@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.zonainmueble.surveys.enums.QuestionType;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -17,11 +18,11 @@ public class SurveyQuestion {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(nullable = false)
+  @NotNull
   private String question;
 
+  @NotNull
   @Enumerated(EnumType.STRING)
-  @Column(nullable = false)
   private QuestionType type;
 
   @JsonManagedReference

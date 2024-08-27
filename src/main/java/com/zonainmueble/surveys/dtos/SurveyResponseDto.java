@@ -19,11 +19,11 @@ public class SurveyResponseDto {
   @Size(min = 10, max = 255, message = "The address must be between 10 and 255 characters long")
   private String address;
 
-  @NotBlank
-  private String longitude;
+  @NotNull
+  private Double longitude;
 
-  @NotBlank
-  private String latitude;
+  @NotNull
+  private Double latitude;
 
   @Valid
   @NotEmpty

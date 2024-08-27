@@ -37,7 +37,7 @@ function questionUI(question) {
 
 $('#sendSurvey').click(() => {
   //TODO: Validar respuestas de la encuesta
-  
+
   if (!locationAddress) {
     return alert('Seleccione la ubicación de la propiedad');
   }
@@ -49,7 +49,7 @@ $('#sendSurvey').click(() => {
   }
 
   const phone = $('#phone').val().trim();
-  if (phone.length != 10) {
+  if (phone.length > 0 && phone.length != 10) {
     $('#phone').select();
     return alert('El Whatsapp debe ser de 10 dígitos');
   }
@@ -57,7 +57,7 @@ $('#sendSurvey').click(() => {
   const answers = surveyAnswers();
   const body = {
     email: $('#email').val(),
-    phone: $('#phone').val(),
+    phone: $('#phone').val() || null,
     address: $('#address').val(),
     latitude: locationAddress.lat(),
     longitude: locationAddress.lng(),
