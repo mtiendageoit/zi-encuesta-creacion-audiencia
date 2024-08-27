@@ -14,4 +14,7 @@ public class AppConfig {
 
   @Value("${api.reports.url}")
   private String reportsApiUrl;
+
+  @Value("${report.process.task.delay:300000}") // 5 Minutes
+  private long reportProcessTaskDelay;
 }

@@ -10,7 +10,7 @@ import com.zonainmueble.surveys.enums.*;
 import com.zonainmueble.surveys.models.*;
 import com.zonainmueble.surveys.repositories.*;
 
-import lombok.AllArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -23,7 +23,7 @@ public class ReportNotificationTask {
   private final SurveyReportRepo surveyReportRepo;
   private final SurveyResponseRepo surveyResponseRepo;
 
-  @Scheduled(fixedDelay = 300000)
+  @Scheduled(fixedDelayString = "#{@appConfig.getReportProcessTaskDelay()}")
   public void executeTask() {
     for (SurveyResponse item : surveyResponseRepo.findAllToSendBasicReport()) {
 
