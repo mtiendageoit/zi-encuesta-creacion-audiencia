@@ -26,6 +26,7 @@ public class ReportNotificationTask {
   @Scheduled(fixedDelayString = "#{@appConfig.getReportProcessTaskDelay()}")
   public void executeTask() {
     for (SurveyResponse item : surveyResponseRepo.findAllToSendBasicReport()) {
+      log.info("Processing survey response: {}", item);
 
       sendReportToSurveyResponse(item);
 
