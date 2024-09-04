@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/encuentas/creacion-audiencia")
 public class ApiController {
   private final SurveyService surveyService;
