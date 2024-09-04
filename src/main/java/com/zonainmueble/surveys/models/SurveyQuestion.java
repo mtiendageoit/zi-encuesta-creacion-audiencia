@@ -25,6 +25,12 @@ public class SurveyQuestion {
   @Enumerated(EnumType.STRING)
   private QuestionType type;
 
+  @NotNull
+  private Integer minAnswers; 
+
+  @NotNull
+  private Integer maxAnswers; 
+
   @JsonManagedReference
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
   private List<QuestionOption> options = new ArrayList<>();
