@@ -45,7 +45,7 @@ public class ReportNotificationTask {
 
     try {
       ReportRequestDto reportRequest = reportRequest(survey);
-      reportFile = reportsApiClient.report(ReportType.BASIC, reportRequest);
+      reportFile = reportsApiClient.report(ReportType.BASICO, reportRequest);
     } catch (Exception e) {
       log.error("Error while generating report", e);
       log.error("survey: {}", survey);
@@ -74,7 +74,7 @@ public class ReportNotificationTask {
   private void registerSurveyReport(SurveyResponse survey, SurveyReportStatus status, String error) {
     SurveyReport item = SurveyReport.builder()
         .surveyResposeId(survey.getId())
-        .reportType(ReportType.BASIC)
+        .reportType(ReportType.BASICO)
         .status(status)
         .error(error)
         .createdAt(new Date())
