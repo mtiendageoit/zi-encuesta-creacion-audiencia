@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.zonainmueble.surveys.dtos.*;
 import com.zonainmueble.surveys.exceptions.AlreadyRegisterException;
@@ -63,6 +64,13 @@ public class SurveyService {
     boolean exists = surveyResponseRepo.existsByEmail(input.getEmail());
     if (exists) {
       throw new AlreadyRegisterException("email-already-register", "Email is already register");
+    }
+
+    if (StringUtils.hasText(input.getPhone())) {
+      exists = surveyResponseRepo.existsByPhone(input.getPhone());
+      if (exists) {
+        throw new AlreadyRegisterException("phone-already-register", "Phone is already register");
+      }
     }
   }
 

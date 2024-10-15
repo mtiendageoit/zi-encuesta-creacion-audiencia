@@ -9,7 +9,9 @@ import com.zonainmueble.surveys.models.SurveyResponse;
 
 public interface SurveyResponseRepo extends JpaRepository<SurveyResponse, Long> {
   boolean existsByEmail(String email);
+  boolean existsByPhone(String phone);
 
   @Query(value = "SELECT * FROM basic_reports_to_send", nativeQuery = true)
   List<SurveyResponse> findAllToSendBasicReport();
+
 }
