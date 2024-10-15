@@ -1,6 +1,6 @@
 
-// const url = 'api/encuentas/creacion-audiencia';
-const url = 'https://zi-creacion-audiencia.azurewebsites.net/api/encuentas/creacion-audiencia';
+const url = 'api/encuentas/creacion-audiencia';
+// const url = 'https://zi-creacion-audiencia.azurewebsites.net/api/encuentas/creacion-audiencia';
 $.get(url, (survey) => {
   survey.forEach(question => {
     $('#questionsContainer').append($(questionUI(question)));

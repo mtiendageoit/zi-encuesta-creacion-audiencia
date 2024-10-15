@@ -9,11 +9,8 @@ import lombok.Getter;
 @Configuration
 public class AppConfig {
 
-  @Value("${api.notifications.url}")
+  @Value("${app.apis.notifications.url}")
   private String notificationsApiUrl;
-
-  @Value("${api.reports.url}")
-  private String reportsApiUrl;
 
   @Value("${report.process.task.delay:300000}") // 5 Minutes
   private long reportProcessTaskDelay;

@@ -13,7 +13,9 @@ import com.zonainmueble.surveys.utils.HttpRequestUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "*")
@@ -28,6 +30,7 @@ public class ApiController {
 
   @PostMapping
   public void registerSurvey(@Valid @RequestBody SurveyResponseDto input, HttpServletRequest request) {
+    log.info("Pocessing input: {}", input);
     HttpClientRequestInfoDto info = HttpRequestUtils.getClientInfo(request);
     surveyService.registerSurvey(input, info);
   }

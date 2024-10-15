@@ -2,21 +2,24 @@ package com.zonainmueble.surveys.clients;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.zonainmueble.surveys.config.AppConfig;
+import com.zonainmueble.surveys.exceptions.BaseException;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NotificationsApiClient {
-  private final AppConfig config;
   private final RestTemplate restTemplate;
+
+  @Value("${app.apis.notifications.url}")
+  private String notificationsApiUrl;
 
   public void sendNotifications(List<Notification> notifications) {
 
@@ -24,12 +27,17 @@ public class NotificationsApiClient {
     headers.setContentType(MediaType.APPLICATION_JSON);
     HttpEntity<List<Notification>> requestEntity = new HttpEntity<>(notifications, headers);
 
-    ResponseEntity<Void> response = restTemplate.exchange(config.getNotificationsApiUrl(), HttpMethod.POST,
-        requestEntity, Void.class);
+    try {
+      ResponseEntity<Void> response = restTemplate.exchange(notificationsApiUrl, HttpMethod.POST,
+          requestEntity, Void.class);
 
-    if (response.getStatusCode() != HttpStatus.OK) {
-      log.info("notifications: {}", notifications);
-      throw new RuntimeException("Failed to send notifications");
+      if (response.getStatusCode() != HttpStatus.OK) {
+        throw new RuntimeException("Failed to send notifications");
+      }
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      log.error("Failed to send notifications: {}, url: {}", notifications, notificationsApiUrl);
+      throw new BaseException("FAILED_TO_SEND_NOTIFICATIONS", "Failed to send notifications");
     }
   }
 }

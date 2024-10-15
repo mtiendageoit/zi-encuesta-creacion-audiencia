@@ -93,7 +93,7 @@ public class ReportNotificationTask {
 
   private EmailNotification emailNotification(SurveyResponse survey, byte[] file) {
     List<EmailAttachFile> attachFiles = new ArrayList<>();
-    attachFiles.add(new EmailAttachFile("reportegratis.pdf", file));
+    attachFiles.add(new EmailAttachFile("reporte.pdf", file));
 
     EmailNotification notification = new EmailNotification();
     notification.setFromName("ZonaInmueble");
