@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class EmailAttachFile {
+public class AttachFile {
     @NotBlank
     private String filename;
 

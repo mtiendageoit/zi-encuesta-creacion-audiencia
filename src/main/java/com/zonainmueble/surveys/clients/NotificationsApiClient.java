@@ -1,7 +1,5 @@
 package com.zonainmueble.surveys.clients;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -21,23 +19,24 @@ public class NotificationsApiClient {
   @Value("${app.apis.notifications.url}")
   private String notificationsApiUrl;
 
-  public void sendNotifications(List<Notification> notifications) {
+  public void sendReporteGratisNotification(ReporteGratisNotification notification) {
 
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
-    HttpEntity<List<Notification>> requestEntity = new HttpEntity<>(notifications, headers);
+    HttpEntity<ReporteGratisNotification> requestEntity = new HttpEntity<>(notification, headers);
 
     try {
-      ResponseEntity<Void> response = restTemplate.exchange(notificationsApiUrl, HttpMethod.POST,
+      String url = notificationsApiUrl + "/reporte-gratis";
+      ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.POST,
           requestEntity, Void.class);
 
       if (response.getStatusCode() != HttpStatus.OK) {
-        throw new RuntimeException("Failed to send notifications");
+        throw new RuntimeException("Failed to send notification");
       }
     } catch (Exception e) {
       log.error(e.getMessage(), e);
-      log.error("Failed to send notifications: {}, url: {}", notifications, notificationsApiUrl);
-      throw new BaseException("FAILED_TO_SEND_NOTIFICATIONS", "Failed to send notifications");
+      log.error("Failed to send notification: {}, url: {}", notification, notificationsApiUrl);
+      throw new BaseException("FAILED_TO_SEND_NOTIFICATION", "Failed to send notification");
     }
   }
 }

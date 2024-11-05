@@ -45,7 +45,7 @@ public class ReportNotificationTask {
 
     try {
       ReportRequestDto reportRequest = reportRequest(survey);
-      reportFile = reportsApiClient.report(ReportType.BASICO, reportRequest);
+      reportFile = reportsApiClient.report(ReportType.GRATUITO, reportRequest);
     } catch (Exception e) {
       log.error("Error while generating report", e);
       log.error("survey: {}", survey);
@@ -56,11 +56,10 @@ public class ReportNotificationTask {
     }
 
     try {
-      List<Notification> notifications = new ArrayList<>();
-      notifications.add(emailNotification(survey, reportFile));
-      notificationsApiClient.sendNotifications(notifications);
+      ReporteGratisNotification notification = reporteGratisNotification(survey, reportFile);
+      notificationsApiClient.sendReporteGratisNotification(notification);
     } catch (Exception e) {
-      log.error("Error sending notifications", e);
+      log.error("Error sending notification", e);
       log.error("survey: {}", survey);
 
       status = SurveyReportStatus.NOTIFICATION_ERROR;
@@ -74,7 +73,7 @@ public class ReportNotificationTask {
   private void registerSurveyReport(SurveyResponse survey, SurveyReportStatus status, String error) {
     SurveyReport item = SurveyReport.builder()
         .surveyResposeId(survey.getId())
-        .reportType(ReportType.BASICO)
+        .reportType(ReportType.GRATUITO)
         .status(status)
         .error(error)
         .createdAt(new Date())
@@ -91,17 +90,12 @@ public class ReportNotificationTask {
         .build();
   }
 
-  private EmailNotification emailNotification(SurveyResponse survey, byte[] file) {
-    List<EmailAttachFile> attachFiles = new ArrayList<>();
-    attachFiles.add(new EmailAttachFile("reporte.pdf", file));
-
-    EmailNotification notification = new EmailNotification();
-    notification.setFromName("ZonaInmueble");
-    notification.setTo(survey.getEmail());
-    notification.setBody("Body del email");
-    notification.setHtml(false);
-    notification.setSubject("Reporte Gratis");
-    notification.setAttachFiles(attachFiles);
+  private ReporteGratisNotification reporteGratisNotification(SurveyResponse survey, byte[] file) {
+    ReporteGratisNotification notification = new ReporteGratisNotification();
+    notification.setEmail(survey.getEmail());
+    notification.setPhone(survey.getPhone());
+    notification.setAddress(survey.getAddress());
+    notification.setPdf(new AttachFile("Zonainmueble-reporte-basico-ubicacion.pdf", file));
 
     return notification;
   }
