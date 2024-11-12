@@ -47,7 +47,7 @@ public class ReportNotificationTask {
       ReportRequestDto reportRequest = reportRequest(survey);
       reportFile = reportsApiClient.report(ReportType.GRATUITO, reportRequest);
     } catch (Exception e) {
-      log.error("Error while generating report", e);
+      log.error("Error mientras se generaba el reporte", e);
       log.error("survey: {}", survey);
 
       status = SurveyReportStatus.REPORT_ERROR;
@@ -59,7 +59,7 @@ public class ReportNotificationTask {
       ReporteGratisNotification notification = reporteGratisNotification(survey, reportFile);
       notificationsApiClient.sendReporteGratisNotification(notification);
     } catch (Exception e) {
-      log.error("Error sending notification", e);
+      log.error("Error al enviar la notificacion de reporte gratis", e);
       log.error("survey: {}", survey);
 
       status = SurveyReportStatus.NOTIFICATION_ERROR;

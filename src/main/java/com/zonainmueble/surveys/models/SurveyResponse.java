@@ -30,6 +30,8 @@ public class SurveyResponse {
   @NotNull
   private Double latitude;
 
+  private String source;
+
   @NotNull
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;

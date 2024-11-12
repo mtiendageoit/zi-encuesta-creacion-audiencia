@@ -2,7 +2,6 @@ package com.zonainmueble.surveys.dtos;
 
 import java.util.List;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -25,7 +24,9 @@ public class SurveyResponseDto {
   @NotNull
   private Double latitude;
 
-  @Valid
-  @NotEmpty
+  // @Valid
+  // @NotEmpty
   private List<QuestionAnswersDto> answers;
+
+  private String source;
 }

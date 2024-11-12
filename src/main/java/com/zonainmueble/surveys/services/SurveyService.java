@@ -29,7 +29,12 @@ public class SurveyService {
   @Transactional
   public void registerSurvey(SurveyResponseDto input, HttpClientRequestInfoDto info) {
     SurveyResponse response = saveResponse(input);
-    saveResponseAnswers(input, response.getId());
+
+    boolean registerAnswers = input.getAnswers() != null && input.getAnswers().isEmpty();
+    if (registerAnswers) {
+      saveResponseAnswers(input, response.getId());
+    }
+    
     saveRequestInfo(info, response.getId());
   }
 
@@ -54,6 +59,7 @@ public class SurveyService {
         .address(input.getAddress())
         .latitude(input.getLatitude())
         .longitude(input.getLongitude())
+        .source(input.getSource())
         .createdAt(new Date())
         .build();
 

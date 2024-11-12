@@ -36,14 +36,14 @@ public class ReportsApiClient {
       if (response.getStatusCode() == HttpStatus.OK) {
         return response.getBody();
       } else {
-        log.error("Failed to get PDF from input: {}, type: {}, url: {}, responseStatusCode: {}", input, type, url,
+        log.error("Error al obtener el reporte para: {}, type: {}, url: {}, responseStatusCode: {}", input, type, url,
             response.getStatusCode());
-        throw new BaseException("FAILED_TO_GENERATE_REPORT", "Failed to generate report");
+        throw new BaseException("FAILED_TO_GENERATE_REPORT", "Error al obtener el reporte gratis pdf");
       }
     } catch (Exception e) {
       log.error(e.getMessage(), e);
-      log.error("Failed to get PDF from input: {}, type: {}, url: {}", input, type, url);
-      throw new BaseException("FAILED_TO_GENERATE_REPORT", "Failed to generate report");
+      log.error("Error al obtener el reporte para: {}, type: {}, url: {}", input, type, url);
+      throw new BaseException("FAILED_TO_GENERATE_REPORT", "Error al obtener el reporte gratis pdf");
     }
   }
 }

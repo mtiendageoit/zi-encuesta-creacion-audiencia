@@ -31,12 +31,12 @@ public class NotificationsApiClient {
           requestEntity, Void.class);
 
       if (response.getStatusCode() != HttpStatus.OK) {
-        throw new RuntimeException("Failed to send notification");
+        throw new RuntimeException("Error al enviar la notificacion de reporte gratis");
       }
     } catch (Exception e) {
       log.error(e.getMessage(), e);
-      log.error("Failed to send notification: {}, url: {}", notification, notificationsApiUrl);
-      throw new BaseException("FAILED_TO_SEND_NOTIFICATION", "Failed to send notification");
+      log.error("No se pudo enviar la notificacion: {}, url: {}", notification, notificationsApiUrl);
+      throw new BaseException("FAILED_TO_SEND_NOTIFICATION", "Error al enviar la notificacion de reporte gratis");
     }
   }
 }

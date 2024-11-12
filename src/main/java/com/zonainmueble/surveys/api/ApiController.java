@@ -30,7 +30,7 @@ public class ApiController {
 
   @PostMapping
   public void registerSurvey(@Valid @RequestBody SurveyResponseDto input, HttpServletRequest request) {
-    log.info("Pocessing input: {}", input);
+    log.info("Registrando reporte gratis para input: {}", input);
     HttpClientRequestInfoDto info = HttpRequestUtils.getClientInfo(request);
     surveyService.registerSurvey(input, info);
   }
