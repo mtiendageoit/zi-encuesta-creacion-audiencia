@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/encuentas/creacion-audiencia")
+@RequestMapping("/api/encuestas/creacion-audiencia")
 public class ApiController {
   private final SurveyService surveyService;
 
